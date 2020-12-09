@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+<<<<<<< HEAD
  * @ORM\Table(name="tbl_user")
+=======
+>>>>>>> de9b3ceea82123941eb41f45ac2e6a36c7b6bffe
  */
 class User
 {
@@ -19,7 +22,11 @@ class User
     private $id;
 
     /**
+<<<<<<< HEAD
      * @ORM\Column(type="string", length=255)
+=======
+     * @ORM\Column(type="string", length=50)
+>>>>>>> de9b3ceea82123941eb41f45ac2e6a36c7b6bffe
      */
     private $pseudo;
 
