@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,16 @@ class User
      * @ORM\Column(type="text", nullable=true)
      */
     private $about;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Theme::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $themes;
+
+    public function __construct()
+    {
+        $this->themes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +99,36 @@ class User
     public function setAbout(?string $about): self
     {
         $this->about = $about;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Theme[]
+     */
+    public function getThemes(): Collection
+    {
+        return $this->themes;
+    }
+
+    public function addTheme(Theme $theme): self
+    {
+        if (!$this->themes->contains($theme)) {
+            $this->themes[] = $theme;
+            $theme->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTheme(Theme $theme): self
+    {
+        if ($this->themes->removeElement($theme)) {
+            // set the owning side to null (unless already changed)
+            if ($theme->getUser() === $this) {
+                $theme->setUser(null);
+            }
+        }
 
         return $this;
     }
